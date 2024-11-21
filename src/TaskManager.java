@@ -42,6 +42,7 @@ public class TaskManager {
     // Обновление Эпика.
     public void updateEpic(Epic epic) {
         epics.put(epic.getId(), epic);
+        updateEpicStatus(epic.getId());
     }
 
     // Обновление подзадачи.
@@ -136,23 +137,27 @@ public class TaskManager {
     // Обновление статуса Эпика
     private void updateEpicStatus(int epicId) {
         Epic epic = epics.get(epicId);
-        boolean isAllDone = true;
-        boolean isAllNew = true;
-        for (Integer subTasksId : epic.getSubtasks()) {
-            SubTask subTask = subTasks.get(subTasksId);
-            if (subTask.getStatus() != Status.DONE) {
-                isAllDone = false;
-            }
-            if (subTask.getStatus() != Status.NEW) {
-                isAllNew = false;
-            }
-        }
-        if (isAllDone) {
-            epic.setStatus(Status.DONE);
-        } else if (isAllNew) {
+        if (epic.getSubtasks().isEmpty()) {
             epic.setStatus(Status.NEW);
         } else {
-            epic.setStatus(Status.IN_PROGRESS);
+            boolean isAllDone = true;
+            boolean isAllNew = true;
+            for (Integer subTasksId : epic.getSubtasks()) {
+                SubTask subTask = subTasks.get(subTasksId);
+                if (subTask.getStatus() != Status.DONE) {
+                    isAllDone = false;
+                }
+                if (subTask.getStatus() != Status.NEW) {
+                    isAllNew = false;
+                }
+            }
+            if (isAllDone) {
+                epic.setStatus(Status.DONE);
+            } else if (isAllNew) {
+                epic.setStatus(Status.NEW);
+            } else {
+                epic.setStatus(Status.IN_PROGRESS);
+            }
         }
     }
 

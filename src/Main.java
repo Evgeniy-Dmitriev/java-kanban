@@ -50,7 +50,7 @@ public class Main {
         }
 
         tm.removeTaskById(1);
-        tm.removeTaskById(3);
+        tm.removeEpicById(3);
         System.out.println("Список задач после удаления:");
         for (Task task : tm.getTasksList()) {
             System.out.println(task);
