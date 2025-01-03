@@ -94,5 +94,10 @@ public class Main {
         for (SubTask subTask : tm.getSubtasksList()) {
             System.out.println(subTask);
         }
+
+        System.out.println("Получаем список getHistory:");
+        for (Task task : tm.getHistory()) {
+            System.out.println(task);
+        }
     }
 }
