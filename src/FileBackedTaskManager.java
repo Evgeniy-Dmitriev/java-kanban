@@ -196,16 +196,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         System.out.println("Количество Эпиков: " + loadedFileBackedTaskManager.getEpicsList().size());
         System.out.println("Количество Подзадач: " + loadedFileBackedTaskManager.getSubtasksList().size());
     }
-}
 
-class ManagerSaveException extends RuntimeException {
-    public ManagerSaveException(String message, Throwable cause) {
-        super(message, cause);
+    public static class ManagerSaveException extends RuntimeException {
+        public ManagerSaveException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
-}
 
-class ManagerLoadFromFileException extends RuntimeException {
-    public ManagerLoadFromFileException(String message, Throwable cause) {
-        super(message, cause);
+    public static class ManagerLoadFromFileException extends RuntimeException {
+        public ManagerLoadFromFileException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 }
