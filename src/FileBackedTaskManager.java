@@ -30,7 +30,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 LocalDateTime.of(2025, 2, 7, 19, 20));
         fileBackedTaskManager.addNewSubtask(subtask);
         SubTask subtask2 = new SubTask("Имя подзадачи 2", "Описание подзадачи 2", epic.getId(),
-                Duration.ofMinutes(15),
+                Duration.ofMinutes(10),
                 LocalDateTime.of(2025, 2, 7, 19, 10));
         fileBackedTaskManager.addNewSubtask(subtask2);
         SubTask subtask3 = new SubTask("Имя подзадачи 3", "Описание подзадачи 3", epic.getId(),
