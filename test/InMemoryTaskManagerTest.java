@@ -1,9 +1,12 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     static TaskManager taskManager;
     static Task task;
     static Epic epic;
@@ -49,6 +52,18 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void testSameId() {
+    void shouldClearTasksFromMemory() {
+        Task task = new Task("Name", "Description",
+                Duration.ofMinutes(60),
+                LocalDateTime.now());
+        manager.addNewTask(task);
+
+        manager.removeTasks();
+        assertTrue(manager.getTasksList().isEmpty());
+    }
+
+    @Override
+    InMemoryTaskManager createManager() {
+        return new InMemoryTaskManager();
     }
 }
