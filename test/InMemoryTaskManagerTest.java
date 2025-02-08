@@ -12,7 +12,7 @@ class InMemoryTaskManagerTest {
     @BeforeAll
     static  void beforeAll(){
         taskManager = Managers.getDefault();
-        task = new Task("TaskName", "TaskDescription");
+        task = new Task("TaskName", "TaskDescription", null, null);
         epic = new Epic("EpicName", "EpicDescription");
     }
 
@@ -39,7 +39,7 @@ class InMemoryTaskManagerTest {
         taskManager.addNewEpic(epic);
         int epicId = taskManager.getEpicsList().getFirst().getId();
 
-        subTask = new SubTask("SubtaskName", "SubtaskDescription", epicId);
+        subTask = new SubTask("SubtaskName", "SubtaskDescription", epicId, null, null);
         taskManager.addNewSubtask(subTask);
         int id = taskManager.getSubtasksList().getFirst().getId();
 

@@ -1,3 +1,5 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -5,19 +7,24 @@ public class Task {
     private String name;
     private String description;
     private Status status;
+    private Duration duration;
+    private LocalDateTime startTime;
 
-
-    public Task(String name, String description) {
+    public Task(String name, String description, Duration duration, LocalDateTime startTime) {
         this.name = name;
         this.description = description;
-        status = Status.NEW;
+        this.status = Status.NEW;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
-    public Task(String name, String description, Status status, int id) {
+    public Task(String name, String description, Status status, int id, Duration duration, LocalDateTime startTime) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.id = id;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     protected void setId(int id) {
@@ -52,6 +59,29 @@ public class Task {
         this.status = status;
     }
 
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (startTime == null || duration == null) {
+            return null;
+        }
+        return startTime.plus(duration);
+    }
+
     @Override
     public String toString() {
         return getClass().getName() + "{" +
@@ -59,9 +89,10 @@ public class Task {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status + '\'' +
+                ", duration=" + duration + '\'' +
+                ", startTime=" + startTime + '\'' +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object object) {

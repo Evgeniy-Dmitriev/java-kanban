@@ -1,6 +1,9 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class InMemoryTaskManager implements TaskManager {
     private int nextId = 1;
@@ -38,6 +41,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(subTask.getEpicId());
         epic.getSubtasks().add(subTask.getId());
         updateEpicStatus(subTask.getEpicId());
+        updateEpicFields(subTask.getEpicId());
     }
 
     // Обновление задачи.
@@ -51,6 +55,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateEpic(Epic epic) {
         epics.put(epic.getId(), epic);
         updateEpicStatus(epic.getId());
+        updateEpicFields(epic.getId());
     }
 
     // Обновление подзадачи.
@@ -58,6 +63,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateSubtask(SubTask subTask) {
         subTasks.put(subTask.getId(), subTask);
         updateEpicStatus(subTask.getEpicId());
+        updateEpicFields(subTask.getEpicId());
     }
 
     // Удаление задач
@@ -122,6 +128,7 @@ public class InMemoryTaskManager implements TaskManager {
         subTasks.remove(id);
         epic.getSubtasks().remove(Integer.valueOf(id));
         updateEpicStatus(epic.getId());
+        updateEpicFields(subTask.getEpicId());
         history.remove(id);
     }
 
@@ -209,4 +216,29 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    // Обновление полей Эпика (startTime, duration, endTime)
+    public void updateEpicFields(int epicId) {
+        Epic epic = epics.get(epicId);
+        List<SubTask> subTasks = getSubtasksListByEpicId(epicId);
+        if (subTasks.isEmpty()) {
+            return;
+        }
+        Duration totalDuration = subTasks.stream()
+                .map(SubTask::getDuration)
+                .filter(Objects::nonNull)
+                .reduce(Duration.ZERO, Duration::plus);
+        LocalDateTime earliestStartTime = subTasks.stream()
+                .map(SubTask::getStartTime)
+                .filter(Objects::nonNull)
+                .min(LocalDateTime::compareTo)
+                .orElse(null);
+        LocalDateTime latestEndTime = subTasks.stream()
+                .map(SubTask::getEndTime)
+                .filter(Objects::nonNull)
+                .max(LocalDateTime::compareTo)
+                .orElse(null);
+        epic.setDuration(totalDuration);
+        epic.setStartTime(earliestStartTime);
+        epic.setEndTime(latestEndTime);
+    }
 }

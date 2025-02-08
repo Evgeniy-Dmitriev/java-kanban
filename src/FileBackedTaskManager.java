@@ -3,6 +3,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
@@ -11,18 +13,29 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         File file = File.createTempFile("file", ".csv", null);
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
 
-        Task task = new Task("Имя задачи 1", "Описание задачи 1");
+        Task task = new Task("Имя задачи 1", "Описание задачи 1",
+                Duration.ofMinutes(55),
+                LocalDateTime.of(2025, 2, 7, 16, 27));
         fileBackedTaskManager.addNewTask(task);
-        Task task2 = new Task("Имя задачи 2", "Описание задачи 2");
+        Task task2 = new Task("Имя задачи 2", "Описание задачи 2",
+                Duration.ofMinutes(40),
+                LocalDateTime.of(2025, 2, 7, 18, 30));
         fileBackedTaskManager.addNewTask(task2);
 
         Epic epic = new Epic("Имя Эпика 1", "Описание эпика 1");
         fileBackedTaskManager.addNewEpic(epic);
 
-        SubTask subtask = new SubTask("Имя подзадачи 1", "Описание подзадачи 1", epic.getId());
+        SubTask subtask = new SubTask("Имя подзадачи 1", "Описание подзадачи 1", epic.getId(),
+                Duration.ofMinutes(10),
+                LocalDateTime.of(2025, 2, 7, 19, 20));
         fileBackedTaskManager.addNewSubtask(subtask);
-        SubTask subtask2 = new SubTask("Имя подзадачи 2", "Описание подзадачи 2", epic.getId());
+        SubTask subtask2 = new SubTask("Имя подзадачи 2", "Описание подзадачи 2", epic.getId(),
+                Duration.ofMinutes(15),
+                LocalDateTime.of(2025, 2, 7, 19, 10));
         fileBackedTaskManager.addNewSubtask(subtask2);
+        SubTask subtask3 = new SubTask("Имя подзадачи 3", "Описание подзадачи 3", epic.getId(),
+                null, null);
+        fileBackedTaskManager.addNewSubtask(subtask3);
 
         FileBackedTaskManager loadedFileBackedTaskManager = loadFromFile(file);
 
@@ -139,7 +152,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (Writer fileWriter = new FileWriter(file)) {
-            fileWriter.write("id,type,name,status,description,epic\n");
+            fileWriter.write("id,type,name,status,description,duration,startTime,epic\n");
             for (Task task : getTasksList()) {
                 fileWriter.write(toString(task) + "\n");
             }
@@ -166,6 +179,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 task.getName(),
                 String.valueOf(task.getStatus()),
                 task.getDescription(),
+                task.getDuration() != null ? String.valueOf(task.getDuration().getSeconds() / 60) : "0",
+                task.getStartTime() != null ? task.getStartTime().toString() : "",
                 epicId
         );
     }
@@ -177,17 +192,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = taskArray[2];
         Status status = Status.valueOf(taskArray[3]);
         String description = taskArray[4];
+        Duration duration = Duration.ofMinutes(Long.parseLong(taskArray[5]));
+        LocalDateTime startTime = !taskArray[6].isBlank() ? LocalDateTime.parse(taskArray[6]) : null;
         Task task = null;
         switch (type) {
             case "TASK":
-                task = new Task(name, description);
+                task = new Task(name, description, duration, startTime);
                 break;
             case "EPIC":
                 task = new Epic(name, description);
                 break;
             case "SUBTASK":
-                int epicId = Integer.parseInt(taskArray[5]);
-                task = new SubTask(name, description, epicId);
+                int epicId = Integer.parseInt(taskArray[7]);
+                task = new SubTask(name, description, epicId, duration, startTime);
                 break;
         }
         if (task != null) {

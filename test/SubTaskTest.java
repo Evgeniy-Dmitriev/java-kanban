@@ -13,8 +13,8 @@ class SubTaskTest {
 
     @Test
     void testEquals() {
-        SubTask subTask1 = new SubTask("Name1", "Description1",2);
-        SubTask subTask2 = new SubTask("Name2", "Description2", 3);
+        SubTask subTask1 = new SubTask("Name1", "Description1",2, null, null);
+        SubTask subTask2 = new SubTask("Name2", "Description2", 3, null, null);
         subTask1.setId(3);
         subTask2.setId(3);
 
@@ -26,7 +26,7 @@ class SubTaskTest {
         Epic epic = new Epic("Name", "Description");
         taskManager.addNewEpic(epic);
 
-        SubTask subtask = new SubTask("Name", "Description", epic.getId());
+        SubTask subtask = new SubTask("Name", "Description", epic.getId(), null, null);
         taskManager.addNewSubtask(subtask);
 
         assertNotEquals(subtask.getEpicId(), subtask.getId(), "Подзадача не должна быть своим собственным Эпиком.");
