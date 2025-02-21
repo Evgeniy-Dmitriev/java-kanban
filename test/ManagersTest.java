@@ -14,7 +14,7 @@ class ManagersTest {
         assertNotNull(taskManager, "taskManager должен быть создан.");
         assertTrue(taskManager.getTasksList().isEmpty(), "taskManager должен быть инициализирован с пустым списком задач");
 
-        task = new Task("Name", "Description");
+        task = new Task("Name", "Description", null, null);
         taskManager.addNewTask(task);
         assertEquals(1, taskManager.getTasksList().size(), "Размер списка задач должен быть равен 1 после добавления задачи.");
 

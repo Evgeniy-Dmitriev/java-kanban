@@ -4,8 +4,8 @@ public class Main {
     public static void main(String[] args) {
         tm = new InMemoryTaskManager();
 
-        tm.addNewTask(new Task("Название задачи", "Описание задачи"));
-        tm.addNewTask(new Task("Название задачи_2", "Описание задачи_2"));
+        tm.addNewTask(new Task("Название задачи", "Описание задачи", null, null));
+        tm.addNewTask(new Task("Название задачи_2", "Описание задачи_2", null, null));
         System.out.println("Список задач:");
         for (Task task : tm.getTasksList()) {
             System.out.println(task);
@@ -18,9 +18,9 @@ public class Main {
             System.out.println(epic);
         }
 
-        tm.addNewSubtask(new SubTask("Название подзадачи", "Описание подзадачи", 3));
-        tm.addNewSubtask(new SubTask("Название подзадачи_2", "Описание подзадачи_2", 3));
-        tm.addNewSubtask(new SubTask("Название подзадачи_3", "Описание подзадачи_3", 4));
+        tm.addNewSubtask(new SubTask("Название подзадачи", "Описание подзадачи", 3, null, null));
+        tm.addNewSubtask(new SubTask("Название подзадачи_2", "Описание подзадачи_2", 3, null, null));
+        tm.addNewSubtask(new SubTask("Название подзадачи_3", "Описание подзадачи_3", 4, null, null));
         System.out.println("Список подзадач Эпика с ID=3:");
         for (SubTask subTask : tm.getSubtasksListByEpicId(3)) {
             System.out.println(subTask);
@@ -60,11 +60,11 @@ public class Main {
         }
 
 
-        tm.updateTask(new Task("New_Название задачи", "New_Описание задачи", Status.DONE, 1));
-        tm.updateTask(new Task("New_Название задачи_2", "New_Описание задачи_2", Status.IN_PROGRESS, 2));
-        tm.updateSubtask(new SubTask("New_Название подзадачи", "New_Описание подзадачи", Status.IN_PROGRESS, 5, 3));
-        tm.updateSubtask(new SubTask("New_Название подзадачи_2", "New_Описание подзадачи_2", Status.DONE, 6, 3));
-        tm.updateSubtask(new SubTask("New_Название подзадачи_3", "New_Описание подзадачи_3", Status.DONE, 7, 4));
+        tm.updateTask(new Task("New_Название задачи", "New_Описание задачи", Status.DONE, 1, null, null));
+        tm.updateTask(new Task("New_Название задачи_2", "New_Описание задачи_2", Status.IN_PROGRESS, 2, null, null));
+        tm.updateSubtask(new SubTask("New_Название подзадачи", "New_Описание подзадачи", Status.IN_PROGRESS, 5, 3, null, null));
+        tm.updateSubtask(new SubTask("New_Название подзадачи_2", "New_Описание подзадачи_2", Status.DONE, 6, 3, null, null));
+        tm.updateSubtask(new SubTask("New_Название подзадачи_3", "New_Описание подзадачи_3", Status.DONE, 7, 4, null, null));
 
         System.out.println("Список задач после обновления:");
         for (Task task : tm.getTasksList()) {

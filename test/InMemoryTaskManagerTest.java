@@ -1,9 +1,12 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     static TaskManager taskManager;
     static Task task;
     static Epic epic;
@@ -12,7 +15,7 @@ class InMemoryTaskManagerTest {
     @BeforeAll
     static  void beforeAll(){
         taskManager = Managers.getDefault();
-        task = new Task("TaskName", "TaskDescription");
+        task = new Task("TaskName", "TaskDescription", null, null);
         epic = new Epic("EpicName", "EpicDescription");
     }
 
@@ -39,7 +42,7 @@ class InMemoryTaskManagerTest {
         taskManager.addNewEpic(epic);
         int epicId = taskManager.getEpicsList().getFirst().getId();
 
-        subTask = new SubTask("SubtaskName", "SubtaskDescription", epicId);
+        subTask = new SubTask("SubtaskName", "SubtaskDescription", epicId, null, null);
         taskManager.addNewSubtask(subTask);
         int id = taskManager.getSubtasksList().getFirst().getId();
 
@@ -49,6 +52,18 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void testSameId() {
+    void shouldClearTasksFromMemory() {
+        Task task = new Task("Name", "Description",
+                Duration.ofMinutes(60),
+                LocalDateTime.now());
+        manager.addNewTask(task);
+
+        manager.removeTasks();
+        assertTrue(manager.getTasksList().isEmpty());
+    }
+
+    @Override
+    InMemoryTaskManager createManager() {
+        return new InMemoryTaskManager();
     }
 }

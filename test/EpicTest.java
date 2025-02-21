@@ -26,7 +26,7 @@ class EpicTest {
         Epic epic = new Epic("Name", "Description");
         taskManager.addNewEpic(epic);
 
-        SubTask subtask = new SubTask("Name", "Description", epic.getId());
+        SubTask subtask = new SubTask("Name", "Description", epic.getId(), null, null);
         taskManager.addNewSubtask(subtask);
 
         for (int id : epic.getSubtasks()) {

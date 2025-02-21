@@ -13,7 +13,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void shouldPreviousTaskVersionInHistory() {
-        Task task = new Task("Name", "Description");
+        Task task = new Task("Name", "Description", null, null);
         taskManager.addNewTask(task);
 
         String previousTaskName = task.getName();
@@ -21,7 +21,7 @@ class InMemoryHistoryManagerTest {
 
         taskManager.getTaskById(task.getId());
 
-        taskManager.updateTask(new Task("New_name", "New_description", task.getStatus(), task.getId()));
+        taskManager.updateTask(new Task("New_name", "New_description", task.getStatus(), task.getId(), null, null));
 
         Task previousTaskVersion = taskManager.getHistory().get(0);
 
@@ -37,11 +37,11 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void shouldCorrectlyAddAndRemoveTasksInHistoryManager() {
-        taskManager.addNewTask(new Task("Name1", "Description1"));                  // id = 2
-        taskManager.addNewTask(new Task("Name2", "Description2"));                  // id = 3
+        taskManager.addNewTask(new Task("Name1", "Description1", null, null));                  // id = 2
+        taskManager.addNewTask(new Task("Name2", "Description2", null, null));                  // id = 3
         taskManager.addNewEpic(new Epic("Name3", "Description3"));                  // id = 4
-        taskManager.addNewSubtask(new SubTask("Name4", "Description4", 4));  // id = 5
-        taskManager.addNewSubtask(new SubTask("Name5", "Description5", 4));  // id = 6
+        taskManager.addNewSubtask(new SubTask("Name4", "Description4", 4, null, null));  // id = 5
+        taskManager.addNewSubtask(new SubTask("Name5", "Description5", 4, null, null));  // id = 6
 
         taskManager.getTaskById(2);
         assertEquals(1, taskManager.getHistory().size(), "Размер списка задач должен быть равен 1");
