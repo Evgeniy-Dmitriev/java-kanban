@@ -1,3 +1,10 @@
+import manager.InMemoryTaskManager;
+import task.Status;
+import manager.TaskManager;
+import task.Epic;
+import task.SubTask;
+import task.Task;
+
 public class Main {
     static TaskManager tm;
 

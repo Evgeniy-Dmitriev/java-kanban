@@ -1,5 +1,9 @@
+package manager;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import task.Status;
+import task.Task;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

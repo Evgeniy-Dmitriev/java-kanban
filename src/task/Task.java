@@ -1,14 +1,19 @@
+package task;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task {
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     private int id;
     private String name;
     private String description;
     private Status status;
     private Duration duration;
     private LocalDateTime startTime;
+    protected final String type = getClass().getSimpleName();
 
     public Task(String name, String description, Duration duration, LocalDateTime startTime) {
         this.name = name;
@@ -27,7 +32,7 @@ public class Task {
         this.startTime = startTime;
     }
 
-    protected void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -84,13 +89,14 @@ public class Task {
 
     @Override
     public String toString() {
-        return getClass().getName() + "{" +
+        return type + "{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status + '\'' +
                 ", duration=" + duration + '\'' +
                 ", startTime=" + startTime + '\'' +
+                ", type=" + type + '\'' +
                 '}';
     }
 

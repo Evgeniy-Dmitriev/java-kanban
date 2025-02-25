@@ -1,10 +1,18 @@
+package manager;
+
+import exeption.TaskIntersectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import task.Epic;
+import task.Status;
+import task.SubTask;
+import task.Task;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 abstract class TaskManagerTest<T extends TaskManager> {
     protected T manager;
@@ -65,7 +73,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
                 Duration.ofMinutes(60),
                 startTime.plusMinutes(30));
 
-        assertThrows(IllegalStateException.class, () -> manager.addNewTask(task2));
+        assertThrows(TaskIntersectionException.class, () -> manager.addNewTask(task2));
     }
 
     @Test

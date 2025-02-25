@@ -1,5 +1,10 @@
+package manager;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import task.Epic;
+import task.SubTask;
+import task.Task;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,4 +1,7 @@
+package manager;
+
 import org.junit.jupiter.api.Test;
+import task.Task;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +27,7 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
     @Test
     void shouldSaveAndLoadFromFile() {
         FileBackedTaskManager newManager = new FileBackedTaskManager(file);
-        Task task = new Task("Test Task", "Description",
+        Task task = new Task("Test task.Task", "Description",
                 Duration.ofMinutes(60),
                 LocalDateTime.now());
         newManager.addNewTask(task);

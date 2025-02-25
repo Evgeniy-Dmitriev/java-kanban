@@ -1,5 +1,11 @@
+package manager;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import task.Epic;
+import task.SubTask;
+import task.Task;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -59,7 +65,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         manager.addNewTask(task);
 
         manager.removeTasks();
-        assertTrue(manager.getTasksList().isEmpty());
+        Assertions.assertTrue(manager.getTasksList().isEmpty());
     }
 
     @Override

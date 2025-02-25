@@ -1,3 +1,12 @@
+package manager;
+
+import exeption.ManagerLoadFromFileException;
+import exeption.ManagerSaveException;
+import task.Epic;
+import task.Status;
+import task.SubTask;
+import task.Task;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -61,13 +70,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 Task task = fromString(line);
                 String type = task.getClass().getName();
                 switch (type) {
-                    case "Task":
+                    case "task.Task":
                         fileBackedTaskManager.tasks.put(task.getId(), task);
                         break;
-                    case "Epic":
+                    case "task.Epic":
                         fileBackedTaskManager.epics.put(task.getId(), (Epic) task);
                         break;
-                    case "SubTask":
+                    case "task.SubTask":
                         fileBackedTaskManager.subTasks.put(task.getId(), (SubTask) task);
                         break;
                 }
