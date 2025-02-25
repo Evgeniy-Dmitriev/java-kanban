@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpServer;
 import http.deserializer.DurationTypeAdapter;
 import http.deserializer.LocalDateTimeTypeAdapter;
 import http.deserializer.TaskJsonDeserializer;
+import http.handler.EpicHandler;
 import http.handler.SubtaskHandler;
 import http.handler.TaskHandler;
 import manager.Managers;
@@ -34,6 +35,7 @@ public class HttpTaskServer {
 
         server.createContext("/tasks", new TaskHandler(taskManager, gson));
         server.createContext("/subtasks", new SubtaskHandler(taskManager, gson));
+        server.createContext("/epics", new EpicHandler(taskManager, gson));
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
