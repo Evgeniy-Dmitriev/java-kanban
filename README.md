@@ -130,31 +130,6 @@ manager.updateSubtask(development);
 // Status эпика будет пересчитан автоматически
 ```
 
-## 🧪 Тестирование
-
-Рекомендуемые тестовые сценарии:
-
-```java
-// Тестирование CRUD операций
-testAddAndGetTask();
-testUpdateTask();
-testDeleteTask();
-
-// Тестирование связей эпиков и подзадач
-testEpicStatusCalculation();
-testSubtaskEpicRelationship();
-testDeleteEpicWithSubtasks();
-
-// Тестирование истории
-testHistoryTracking();
-testHistoryLimit();
-testDuplicateHistoryPrevention();
-
-// Тестирование приоритизации
-testTaskPrioritization();
-testTimeOverlapValidation();
-```
-
 ## 🔧 Планы по развитию
 
 ### Краткосрочные улучшения
